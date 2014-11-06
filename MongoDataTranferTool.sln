@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDataTransferDll", "MongoDataTransferDll\MongoDataTransferDll.csproj", "{B3E33FC6-941F-4CFD-BBA1-5D3DE56FF1C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDataTranferTool", "MongoDataTranferTool\MongoDataTranferTool.csproj", "{CD857E95-600C-46DF-8E51-73B073A5FCD2}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = OSSP.BLIService.DataTranferTool.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3E33FC6-941F-4CFD-BBA1-5D3DE56FF1C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E33FC6-941F-4CFD-BBA1-5D3DE56FF1C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E33FC6-941F-4CFD-BBA1-5D3DE56FF1C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E33FC6-941F-4CFD-BBA1-5D3DE56FF1C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD857E95-600C-46DF-8E51-73B073A5FCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD857E95-600C-46DF-8E51-73B073A5FCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD857E95-600C-46DF-8E51-73B073A5FCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD857E95-600C-46DF-8E51-73B073A5FCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--字段编码映射-->
+<fields>
+  <field name="id" number="1" />
+</fields>

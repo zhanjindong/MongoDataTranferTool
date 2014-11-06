@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--列映射关系-->
+<columnsMap>
+  <column sqlServer="Uid" type="bigint" mongoDB ="Uid" />
+  <column sqlServer="Status" type="varchar" mongoDB="Status" />
+  <column sqlServer="NO" type="bigint" mongoDB="NO" />
+  <column sqlServer="UserType" type="int" mongoDB="UserType" />
+  <column sqlServer="CreatedTime" type="datetime" mongoDB="CreatedTime" />
+</columnsMap>

@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<globalConfig>
+  <!--是否自动转移,0 不自动转移，1 自动转移-->
+  <isAutoTransfer>0</isAutoTransfer>
+
+  <!--转移哪天的数据，只有当isAutoTransfer配置为0时才有效，格式为：YYYY-MM-DD，如2011-01-01-->
+  <transferDate>2013-08-01</transferDate>
+
+  <!--转移方式，0 剪切(自动删除过期数据)，1 复制-->
+  <transferType>0</transferType>
+
+  <!--删除Mongodb服务器中距离转移日期...天的数据，只有当transferType配置为0时才有效-->
+  <deleteDay>6</deleteDay>
+
+  <!--转移方向，0 mongo转sql，1 sql转mongo-->
+  <transferDirect>0</transferDirect>
+
+  <!--转移队列中最多数据块数量-->
+  <dataBlockCount>1000</dataBlockCount>
+
+  <!--数据块行数-->
+  <blockRowCount>100000</blockRowCount>
+
+  <!--导出文件的路径(可以是linux的共享路径)，当taskItem的exportFileOption不为0的时候使用-->
+  <!--Linux共享路径：-->
+  <exportFilePath>\\192.168.0.1\test\</exportFilePath>
+  <!--是否映射key-->
+  <isMapKey>true</isMapKey>
+  <!--是否需要通知hadoop集群数据转移结果-->
+  <isNotifyHadoop>true</isNotifyHadoop>
+
+  <!--是否自动根据xml文件信息同步sqlserver表结构,默认为true-->
+  <!--最好的情况是保证xml配置文件、mongodb和sqlserver的表结构一致以达到最高性能-->
+  <isSyncTableStructure>true</isSyncTableStructure>
+
+  <!--是否自动根据运营管理页面的配置信息同步xml文件(目前只需要同步StatLog_map),默认为true-->
+  <isSyncXmlStructure>true</isSyncXmlStructure>
+  <!--同步的数据源-->
+  <syncXmlDataSource></syncXmlDataSource>
+
+  <!--============================================参数说明====================================================-->
+  <!--转移任务列表，表明sqlserver同mongoDB中集合名相同-->
+  <!--注意taskId不能重复-->
+  <!--aliasTableName:别名,转移后存储将以别名为准，同时对应的map文件也以别名为准-->
+  <!--shardLevel(sqlShardLevel/mongoShardLevel)表示分表等级，0 按小时，1 按天，2 按月，3 按年，4 不分表。这里默认是指转移一天的数据-->
+  <!--transferDirect:0,mongodb到sqlserver,1sqlserver到mongodb，2,mongodb到文件，3,sqlserver到文件-->
+  <!--sqlAfterWhere:SqlToFile中配置，筛选条件。默认是整个表,注意不要跟where-->
+  <!--orderFields:SqlToFile中配置，不提供默认为id(需保证有id)，用索引字段可以极大的提高速度-->
+  <!--queryDocument:在MongoToSql中功能类似SqlToFile中的sqlAfterWhere，默认或空是转移一天的数据，*为转移整个表-->
+  <!--transferDate如果不为空的话会覆盖globalConfig中的isAutoTransfer和transferDate选项-->
+  <taskList>
+    <!--*************************************MongoToFile配置示例********************************************-->
+    <taskItem taskId="1"
+		  tableName="Test"
+		  mongoSrc="192.168.0.1:27017;Test"
+      transferDate="2013-08-01"
+		  mongoShardLevel="1"
+		  transferDirect="2"/>
+    <!--***************************************MongoToSql配置示例********************************************-->
+
+    <!--****************************************SqlToFile配置示例********************************************-->
+    <taskItem taskId="9"
+        tableName="Test"
+		  aliasTableName="TestAlias"
+        sqlSrc="server=192.168.0.1;uid=sa;pwd=sasa;database=Test;"
+        sqlAfterWhere="convert(char(10),[Createdtime],20)=convert(char(10), dateadd(day, -2, getdate()), 120)
+        or convert(char(10),[LastVersionModifyTime],20)=convert(char(10), dateadd(day, -2, getdate()), 120)
+        or convert(char(10),[LastDownFromModifyTime],20)=convert(char(10), dateadd(day, -2, getdate()), 120)"
+        orderFields="id"
+        transferDirect="3"
+        sqlShardLevel="4"/>
+
+    <!--****************************************SqToMongo配置示例********************************************-->
+  </taskList>
+
+  <!--邮件设置-->
+  <mailSettings>
+    <smtp>
+      <server>192.168.0.1</server>
+      <port>25</port>
+      <userName>test@test.com</userName>
+      <passWord>123</passWord>
+    </smtp>
+    <mailNotifier>
+      <mailFrom>test@test.com</mailFrom>
+      <mailSuccess>
+        <address>jdzhan@test.com</address>
+        <subject><![CDATA[%transferDate%:数据转移成功！]]></subject>
+        <body>
+          <![CDATA[    	
+            <div>
+            <table style="font-family: 微软雅黑, Fixedsys, 新宋体, Verdana; font-size: 16px">
+              <tr><td colspan="2"><h3>%transferDate%:数据转移成功，见附件详细信息</h3></td></tr>
+            </table>
+            </div>]]>
+        </body>
+      </mailSuccess>
+      <mailError>
+        <address>jdzhan@test.com</address>
+        <subject><![CDATA[%transferDate%:数据转移失败！]]></subject>
+        <body>
+          <![CDATA[    	
+            <div>
+            <table style="font-family: 微软雅黑, Fixedsys, 新宋体, Verdana; font-size: 16px">
+              <tr><td colspan="2"><h3>%transferDate%:数据转移失败，见附件详细信息</h3></td></tr>
+            </table>
+            </div>]]>
+        </body>
+      </mailError>
+    </mailNotifier>
+  </mailSettings>
+</globalConfig>
